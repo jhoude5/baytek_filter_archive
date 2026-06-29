@@ -3,6 +3,7 @@
 		const form = block.querySelector( '[data-baytek-query-form]' );
 		const results = block.querySelector( '[data-baytek-query-results]' );
 		const externalSortField = block.querySelector( '[data-baytek-query-external-sort]' );
+		const filtersArea = block.querySelector( '.baytek-query-filters-area' );
 
 		if ( ! form || ! results ) {
 			return;
@@ -96,11 +97,56 @@
 			updateClearButtonVisibility();
 		}
 
-		function render( pushState ) {
+		function scrollToFilters() {
+			if ( ! filtersArea ) {
+				return;
+			}
+
+			const scrollOffset = 150;
+			const notifyAutoScroll = function( type ) {
+				window.dispatchEvent( new CustomEvent( 'baytek-filter-archive:auto-scroll-' + type ) );
+			};
+			let previousY = window.pageYOffset;
+			let frameCount = 0;
+			const targetY = Math.max( window.pageYOffset + filtersArea.getBoundingClientRect().top - scrollOffset, 0 );
+
+			notifyAutoScroll( 'start' );
+
+			window.scrollTo( {
+				top: targetY,
+				behavior: 'smooth',
+			} );
+
+			function finishAutoScroll() {
+				notifyAutoScroll( 'end' );
+			}
+
+			function watchScrollCompletion() {
+				frameCount += 1;
+
+				const reachedTarget = Math.abs( window.pageYOffset - targetY ) <= 2;
+				const stoppedMoving = Math.abs( window.pageYOffset - previousY ) <= 1;
+				const timedOut = frameCount > 120;
+
+				previousY = window.pageYOffset;
+
+				if ( reachedTarget || ( stoppedMoving && frameCount > 10 ) || timedOut ) {
+					finishAutoScroll();
+					return;
+				}
+
+				window.requestAnimationFrame( watchScrollCompletion );
+			}
+
+			window.requestAnimationFrame( watchScrollCompletion );
+		}
+
+		function render( pushState, options ) {
 			if ( isLoading ) {
 				return;
 			}
 
+			const renderOptions = options || {};
 			const state = readState();
 
 			isLoading = true;
@@ -128,6 +174,10 @@
 				} )
 				.then( function( payload ) {
 					results.innerHTML = payload.html || '';
+
+					if ( renderOptions.scrollToFilters ) {
+						scrollToFilters();
+					}
 				} )
 				.finally( function() {
 					isLoading = false;
@@ -244,7 +294,7 @@
 			}
 
 			pageField.value = button.dataset.page || '1';
-			render( true );
+			render( true, { scrollToFilters: true } );
 		} );
 
 		window.addEventListener( 'popstate', function() {
