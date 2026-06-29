@@ -1,0 +1,125 @@
+{
+  "apiVersion": 3,
+  "name": "baytek/baytek-filter-archive",
+  "title": "Baytek Filter Archive",
+  "category": "widgets",
+  "icon": "filter",
+  "keywords": [ "baytek", "query", "loop", "ajax", "filter" ],
+  "description": "Baytek query loop with filters, pagination, URL state, and reusable block templates.",
+  "textdomain": "baytek-filter-archive",
+  "supports": {
+    "align": [ "wide", "full" ],
+    "spacing": {
+      "blockGap": true
+    },
+    "html": false
+  },
+  "attributes": {
+    "queryId": {
+      "type": "string"
+    },
+    "postTypes": {
+      "type": "array",
+      "default": [ "post" ]
+    },
+    "enableSearch": {
+      "type": "boolean",
+      "default": true
+    },
+    "showContentTypeFilter": {
+      "type": "boolean",
+      "default": false
+    },
+    "showSortByFilter": {
+      "type": "boolean",
+      "default": false
+    },
+    "showSortByOutside": {
+      "type": "boolean",
+      "default": false
+    },
+    "showSearchButton": {
+      "type": "boolean",
+      "default": false
+    },
+    "searchButtonText": {
+      "type": "string",
+      "default": "Search"
+    },
+    "showClearFiltersButton": {
+      "type": "boolean",
+      "default": false
+    },
+    "clearFiltersButtonText": {
+      "type": "string",
+      "default": "Clear filters"
+    },
+    "selectedTaxonomies": {
+      "type": "array",
+      "default": []
+    },
+    "enableEventDateFilter": {
+      "type": "boolean",
+      "default": false
+    },
+    "eventPostType": {
+      "type": "string",
+      "default": "event"
+    },
+    "eventDateMetaKey": {
+      "type": "string",
+      "default": "eventDate"
+    },
+    "postsPerPage": {
+      "type": "number",
+      "default": 10
+    },
+    "showPagination": {
+      "type": "boolean",
+      "default": true
+    },
+    "showResultsCount": {
+      "type": "boolean",
+      "default": false
+    },
+    "resultsCountPosition": {
+      "type": "string",
+      "default": "above"
+    },
+    "resultsCountFormat": {
+      "type": "string",
+      "default": "range_total"
+    },
+    "resultsCountCustomText": {
+      "type": "string",
+      "default": ""
+    },
+    "noResultsMessage": {
+      "type": "string",
+      "default": "No results found. Try adjusting your filters to explore more of our work."
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "date"
+    },
+    "order": {
+      "type": "string",
+      "default": "desc"
+    },
+    "columns": {
+      "type": "number",
+      "default": 3
+    },
+    "filtersPosition": {
+      "type": "string",
+      "default": "top"
+    },
+    "templateId": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "editorScript": "baytek-filter-archive-editor",
+  "style": "baytek-filter-archive-style",
+  "viewScript": "baytek-filter-archive-view"
+}

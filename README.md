@@ -1,93 +1,148 @@
-# baytek-filter-archive
+# Baytek Filter Archive
 
+`Baytek Filter Archive` is a custom Gutenberg block plugin for building AJAX-powered query loops with filter controls, URL-based state, reusable post templates, and pagination.
 
+## Features
 
-## Getting started
+- AJAX filtering without a full page reload
+- URL query parameter syncing for filters and pagination
+- Query support for posts and custom post types
+- Optional keyword search
+- Optional content type filter
+- Optional taxonomy filters based on the selected post type(s)
+- Optional event date filter for `Upcoming` and `Past` results using a meta field
+- Optional sort by filter with `Featured`, `Newest`, and `Oldest`
+- Optional search and clear filter buttons
+- Optional results count with multiple display formats
+- Optional pagination with first, previous, next, and last buttons
+- Compact pagination with ellipses for larger result sets
+- Layout controls for alignments, columns, gap spacing, and filter placement
+- Support for synced patterns / reusable blocks (`wp_block`) as the result template
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Plugin Files
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- `baytek-filter-archive.php`: WordPress plugin entry file
+- `php/Plugin.php`: main plugin bootstrap and block registration
+- `php/Blocks/BlockHelpers.php`: attribute, request, and query helpers
+- `php/Blocks/Controls/Filters.php`: front-end filter rendering
+- `php/Views/ResultsView.php`: results, results count, and pagination rendering
+- `assets/js/editor.js`: block editor controls
+- `assets/js/view.js`: front-end AJAX behavior
+- `assets/css/style.css`: front-end styles
 
-## Add your files
+## Requirements
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.com/baytek/packages/baytek-filter-archive.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-* [Set up project integrations](https://gitlab.com/baytek/packages/baytek-filter-archive/-/settings/integrations)
-
-## Collaborate with your team
-
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+- WordPress `6.5+`
+- PHP `7.4+`
+- Block editor / Gutenberg enabled
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+1. Place the plugin in `wp-content/plugins/baytek-filter-archive`.
+2. Activate `Baytek Filter Archive` from the WordPress plugins screen.
+3. Open the block editor for a page or post.
+4. Insert the `Baytek Filter Archive` block.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+## How To Use
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+1. Add the `Baytek Filter Archive` block to a page.
+2. Choose the post type in the block sidebar.
+3. Set the number of posts per page.
+4. Choose the default query order.
+5. Enable any filters you want to show on the front end.
+6. Select the taxonomy filters that should be available.
+7. Optionally choose a synced pattern / reusable block for each result item.
+8. Publish or update the page.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## Block Settings
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+### Query
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+- `Post Type`: choose a single post type or `All`
+- `Posts Per Page`: set the page size
+- `Show Pagination`: show or hide pagination
+- `Show Results Count`: show or hide result totals
+- `Results Count Position`: display the count above or below the results
+- `Results Count Format`: choose range, page total, or custom text
+- `Order By`: editor-controlled default ordering
+- `Order`: ascending or descending
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+### Filters
 
-## License
-For open source projects, say how it is licensed.
+- `Enable Keyword Search`
+- `Enable Content Type Filter`
+- `Taxonomy Filters`
+- `Enable Event Filter`
+- `Enable Sort By Filter`
+- `Sort By Position`
+- `Add Search Button`
+- `Add Clear Filters Button`
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+### Layout
+
+- `Filters Position`: top of results or left sidebar
+- `Columns`: number of result columns
+- `Gap`: use native block spacing controls
+- `Post Pattern`: choose a synced pattern / reusable block
+- `Empty Message`: custom no-results message
+
+## Results Count Custom Text
+
+When `Results Count Format` is set to `Custom`, these placeholders are supported:
+
+- `{start}`
+- `{end}`
+- `{total}`
+- `{page}`
+- `{pages}`
+
+Examples:
+
+- `Showing {start}-{end} of {total} results`
+- `Page {page} of {pages}`
+
+## URL Parameters
+
+The block stores active filters in the page URL. Depending on enabled filters, parameters may include:
+
+- `keyword`
+- `content_type`
+- taxonomy slugs such as `category`
+- `event_status`
+- `sort_by`
+- `page`
+
+## Event Filter Notes
+
+The event date filter expects:
+
+- a selected event post type
+- a date meta key
+- date values stored in a queryable format such as `Y-m-d`
+
+If `Upcoming` is selected, results are ordered by the event date ascending.
+If `Past` is selected, results are ordered by the event date descending.
+
+## Template Notes
+
+If a synced pattern / reusable block is selected as the result template:
+
+- each queried post is rendered inside that block pattern
+- post-aware core blocks use the current result post context
+
+If no pattern is selected, the plugin falls back to a linked post title.
+
+## Development Notes
+
+- The block is server-rendered.
+- Front-end filtering uses a custom REST endpoint: `baytek-filter-archive/v1/render`
+- The plugin uses AJAX on the front end and keeps state in the URL.
+
+## Known Structure
+
+Current plugin structure assumes:
+
+- `block.json` lives in the plugin root
+- PHP source lives in `php/`
+- front-end and editor assets live in `assets/`
+

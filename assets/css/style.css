@@ -1,0 +1,202 @@
+.wp-block-baytek-baytek-filter-archive {
+  display: block;
+}
+
+.baytek-query-layout {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.baytek-query-filters-area,
+.baytek-query-results {
+  min-width: 0;
+}
+
+.baytek-query-block.baytek-query-filters-position-sidebar .baytek-query-layout {
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  align-items: start;
+}
+
+.baytek-query-block.baytek-query-filters-position-sidebar .baytek-query-filters {
+  grid-template-columns: 1fr;
+}
+
+.baytek-query-filters-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.baytek-query-filter-sort-external {
+  min-width: min(100%, 220px);
+}
+
+.baytek-query-filters {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: 1.5rem;
+}
+
+.baytek-query-filter {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.baytek-query-filter .select-wrapper {
+  width: 100%;
+}
+
+.baytek-query-filter input,
+.baytek-query-filter select {
+  width: 100%;
+  background: var(--wp--preset--color--white);
+}
+
+.baytek-query-filter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.baytek-query-grid {
+  display: grid;
+  gap: var(--wp--style--block-gap, 1.5rem);
+  grid-template-columns: repeat(var(--baytek-query-columns, 3), minmax(0, 1fr));
+}
+
+.baytek-query-block.baytek-query-columns-1 {
+  --baytek-query-columns: 1;
+}
+
+.baytek-query-block.baytek-query-columns-2 {
+  --baytek-query-columns: 2;
+}
+
+.baytek-query-block.baytek-query-columns-3 {
+  --baytek-query-columns: 3;
+}
+
+.baytek-query-block.baytek-query-columns-4 {
+  --baytek-query-columns: 4;
+}
+
+.baytek-query-block.baytek-query-columns-5 {
+  --baytek-query-columns: 5;
+}
+
+.baytek-query-block.baytek-query-columns-6 {
+  --baytek-query-columns: 6;
+}
+
+.baytek-query-item {
+  min-width: 0;
+}
+
+.baytek-query-results-count {
+  margin: 0 0 1rem;
+}
+
+.baytek-query-results-footer {
+  margin-top: var(--wp--preset--spacing--50);
+  padding-top: var(--wp--preset--spacing--50);
+  border-top: 1px solid var(--wp--preset--color--black);
+  display: flex;
+  justify-content: space-between;
+}
+
+.baytek-query-results-footer .baytek-query-results-count {
+  margin-bottom: 1rem;
+}
+
+.baytek-query-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: start;
+}
+
+.baytek-query-page {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  font-size: var(--wp--preset--font-size--small);
+  &:is(:hover, :focus) {
+    text-decoration: underline;
+    &::after {
+      opacity: 0.5;
+    }
+  }
+}
+.baytek-query-page-first, 
+.baytek-query-page-prev,
+.baytek-query-page-next,
+.baytek-query-page-last {
+  visibility: hidden;
+  width: 1rem;
+  height: 1.25rem;
+  padding: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &::after {
+    visibility: visible;
+    font-family: 'Font Awesome 7 Pro';
+    color: var(--wp--preset--color--black);
+    position: absolute;
+    transition: all 0.3s ease-out;
+    font-size: var(--wp--preset--font-size--small);
+  }
+}
+.baytek-query-page-first::after {
+  content: '\f100';
+}
+.baytek-query-page-prev::after {
+  content: '\f104';
+}
+.baytek-query-page-next::after {
+  content: '\f105';
+}
+.baytek-query-page-last::after {
+  content: '\f101';
+}
+
+.baytek-query-page.is-disabled {
+  pointer-events: none;
+  &::after {
+    opacity: 0.3;
+  }
+}
+.baytek-query-page.is-active {
+  font-weight: 700;
+}
+
+.baytek-query-button.is-hidden {
+  display: none;
+}
+
+.baytek-query-empty {
+  margin: 0;
+}
+
+.baytek-query-block.is-loading {
+  opacity: 0.7;
+}
+
+@media (max-width: 782px) {
+  .baytek-query-block.baytek-query-filters-position-sidebar .baytek-query-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .baytek-query-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.components-panel__body label {
+  text-transform: capitalize !important;
+  font-size: 0.813rem !important;
+  font-weight: 400 !important;
+}
