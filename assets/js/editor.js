@@ -96,6 +96,7 @@
 				{ label: __( 'Title', 'baytek-filter-archive' ), value: 'title' },
 				{ label: __( 'Modified Date', 'baytek-filter-archive' ), value: 'modified' },
 				{ label: __( 'Menu Order', 'baytek-filter-archive' ), value: 'menu_order' },
+				{ label: __( 'Postmeta', 'baytek-filter-archive' ), value: 'meta_value' },
 				{ label: __( 'Random', 'baytek-filter-archive' ), value: 'rand' },
 			];
 
@@ -184,8 +185,19 @@
 							value: attributes.orderBy,
 							options: orderByOptions,
 							onChange: function( value ) {
-								setAttributes( { orderBy: value } );
+								setAttributes( {
+									orderBy: value,
+									orderByMetaKey: value === 'meta_value' ? attributes.orderByMetaKey : '',
+								} );
 							},
+						} ),
+						attributes.orderBy === 'meta_value' && el( TextControl, {
+							label: __( 'Meta Key', 'baytek-filter-archive' ),
+							value: attributes.orderByMetaKey || '',
+							onChange: function( value ) {
+								setAttributes( { orderByMetaKey: value } );
+							},
+							help: __( 'Enter the custom field key used for ordering.', 'baytek-filter-archive' ),
 						} ),
 						el( SelectControl, {
 							label: __( 'Order', 'baytek-filter-archive' ),

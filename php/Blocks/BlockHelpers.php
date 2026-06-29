@@ -62,6 +62,7 @@ trait BlockHelpers {
 			'resultsCountCustomText' => '',
 			'noResultsMessage' => __( 'No results found.', 'baytek-filter-archive' ),
 			'orderBy' => 'date',
+			'orderByMetaKey' => '',
 			'order' => 'desc',
 			'columns' => 3,
 			'filtersPosition' => 'top',
@@ -93,7 +94,8 @@ trait BlockHelpers {
 		$attributes['columns']                = max( 1, min( 6, (int) $attributes['columns'] ) );
 		$attributes['filtersPosition']        = in_array( $attributes['filtersPosition'], [ 'top', 'sidebar' ], true ) ? $attributes['filtersPosition'] : 'top';
 		$attributes['templateId']             = (int) $attributes['templateId'];
-		$attributes['orderBy']                = in_array( $attributes['orderBy'], [ 'date', 'title', 'modified', 'menu_order', 'rand' ], true ) ? $attributes['orderBy'] : 'date';
+		$attributes['orderBy']                = in_array( $attributes['orderBy'], [ 'date', 'title', 'modified', 'menu_order', 'rand', 'meta_value' ], true ) ? $attributes['orderBy'] : 'date';
+		$attributes['orderByMetaKey']         = sanitize_text_field( (string) $attributes['orderByMetaKey'] );
 		$attributes['order']                  = 'asc' === strtolower( (string) $attributes['order'] ) ? 'ASC' : 'DESC';
 
 		if ( empty( $attributes['postTypes'] ) ) {
@@ -194,8 +196,14 @@ trait BlockHelpers {
 			'posts_per_page' => $attributes['postsPerPage'],
 			'paged' => $state['page'],
 			'order' => $attributes['order'],
-			'orderby' => $attributes['orderBy'],
+			'orderby' => 'meta_value' === $attributes['orderBy'] && empty( $attributes['orderByMetaKey'] )
+				? 'date'
+				: $attributes['orderBy'],
 		];
+
+		if ( 'meta_value' === $attributes['orderBy'] && ! empty( $attributes['orderByMetaKey'] ) ) {
+			$args['meta_key'] = $attributes['orderByMetaKey'];
+		}
 
 		// Filter by keyword search
 		if ( ! empty( $state['keyword'] ) ) {
