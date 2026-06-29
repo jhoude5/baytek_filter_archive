@@ -10,7 +10,7 @@
   "supports": {
     "align": [ "wide", "full" ],
     "spacing": {
-      "blockGap": true
+      "blockGap": [ "horizontal", "vertical" ]
     },
     "html": false
   },
