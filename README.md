@@ -132,6 +132,77 @@ If a synced pattern / reusable block is selected as the result template:
 
 If no pattern is selected, the plugin falls back to a linked post title.
 
+## Hooks
+
+The plugin exposes WordPress filters and actions so theme code can change query behavior and extend the filter UI without modifying the plugin directly.
+
+### Query Filters
+
+- `baytek-filter-archive-build-query-args`
+  Parameters: `$args`, `$attributes`, `$state`
+  Use this to change the final `WP_Query` args before the query runs.
+
+- `baytek-filter-archive-filterable-taxonomies`
+  Parameters: `$taxonomies`, `$attributes`, `$state`
+  Use this to adjust which taxonomies are available in the filter UI.
+
+- `baytek-filter-archive-sort-by-options`
+  Parameters: `$sort_by_options`, `$attributes`, `$state`
+  Use this to modify the available sort options shown in the filter UI.
+
+Example:
+
+```php
+add_filter( 'baytek-filter-archive-build-query-args', function( $args, $attributes, $state ) {
+	$args['ignore_sticky_posts'] = true;
+	return $args;
+}, 10, 3 );
+```
+
+### Filter UI Actions
+
+- `baytek-filter-archive-before-filters`
+- `baytek-filter-archive-before-filters-toolbar`
+- `baytek-filter-archive-after-filters-toolbar`
+- `baytek-filter-archive-before-filters-form`
+- `baytek-filter-archive-before-filters-fields`
+- `baytek-filter-archive-after-filters-fields`
+- `baytek-filter-archive-before-filter-actions`
+- `baytek-filter-archive-after-filter-actions`
+- `baytek-filter-archive-after-filters-form`
+- `baytek-filter-archive-after-filters`
+
+Each action receives:
+
+- `$attributes`
+- `$state`
+- `$taxonomies`
+- `$sort_by_options`
+
+These hooks are useful when you want to output additional UI markup around the built-in filters.
+
+Example:
+
+```php
+add_action( 'baytek-filter-archive-before-filter-actions', function( $attributes, $state ) {
+	echo '<div class="archive-filter-help">Use the filters below to narrow your results.</div>';
+}, 10, 2 );
+```
+
+### Filter UI HTML Filter
+
+- `baytek-filter-archive-render-filters-html`
+  Parameters: `$html`, `$attributes`, `$state`, `$taxonomies`, `$sort_by_options`
+  Use this to alter the final rendered HTML for the filter form after output buffering.
+
+Example:
+
+```php
+add_filter( 'baytek-filter-archive-render-filters-html', function( $html ) {
+	return str_replace( 'baytek-query-filters', 'baytek-query-filters custom-filter-ui', $html );
+} );
+```
+
 ## Development Notes
 
 - The block is server-rendered.
@@ -145,4 +216,3 @@ Current plugin structure assumes:
 - `block.json` lives in the plugin root
 - PHP source lives in `php/`
 - front-end and editor assets live in `assets/`
-

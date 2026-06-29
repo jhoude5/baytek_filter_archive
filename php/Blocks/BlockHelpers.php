@@ -9,6 +9,29 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 trait BlockHelpers {
 
 	/**
+	 * Apply plugin filter hooks.
+	 *
+	 * @param string $suffix Hook name suffix.
+	 * @param mixed  $value Filtered value.
+	 * @param mixed  ...$args Additional filter arguments.
+	 * @return mixed
+	 */
+	private function apply_plugin_filters( $suffix, $value, ...$args ) {
+		return apply_filters( 'baytek-filter-archive-' . $suffix, $value, ...$args );
+	}
+
+	/**
+	 * Fire plugin action hooks.
+	 *
+	 * @param string $suffix Hook name suffix.
+	 * @param mixed  ...$args Additional action arguments.
+	 * @return void
+	 */
+	private function do_plugin_actions( $suffix, ...$args ) {
+		do_action( 'baytek-filter-archive-' . $suffix, ...$args );
+	}
+
+	/**
 	 * Get the block gap CSS value from the editor
 	 *
 	 * @param array $attributes Block attributes.
@@ -267,6 +290,6 @@ trait BlockHelpers {
 			}
 		}
 
-		return $args;
+		return $this->apply_plugin_filters( 'build-query-args', $args, $attributes, $state );
 	}
 }

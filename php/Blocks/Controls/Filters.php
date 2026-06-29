@@ -18,10 +18,14 @@ trait Filters {
 		$sort_by_options = $this->get_sort_by_options();
 		$form_id = 'baytek-query-form-' . $attributes['queryId'];
 		$has_active_filters = $this->has_active_filters( $state );
+		$taxonomies = $this->apply_plugin_filters( 'filterable-taxonomies', $taxonomies, $attributes, $state );
+		$sort_by_options = $this->apply_plugin_filters( 'sort-by-options', $sort_by_options, $attributes, $state );
 
 		ob_start();
+		$this->do_plugin_actions( 'before-filters', $attributes, $state, $taxonomies, $sort_by_options );
 		?>
 		<?php if ( $attributes['showSortByFilter'] && $attributes['showSortByOutside'] ) : ?>
+			<?php $this->do_plugin_actions( 'before-filters-toolbar', $attributes, $state, $taxonomies, $sort_by_options ); ?>
 			<div class="baytek-query-filters-toolbar">
 				<div class="baytek-query-filter baytek-query-filter-sort baytek-query-filter-sort-external filter-taxonomy wp-block-column select-container" id="sort-by">
 					<label for="sort-by-external-select"><?php esc_html_e( 'Sort By', 'baytek-filter-archive' ); ?></label>
@@ -37,8 +41,11 @@ trait Filters {
 					</div>
 				</div>
 			</div>
+			<?php $this->do_plugin_actions( 'after-filters-toolbar', $attributes, $state, $taxonomies, $sort_by_options ); ?>
 		<?php endif; ?>
+		<?php $this->do_plugin_actions( 'before-filters-form', $attributes, $state, $taxonomies, $sort_by_options ); ?>
 		<form class="baytek-query-filters" data-baytek-query-form id="<?php echo esc_attr( $form_id ); ?>">
+			<?php $this->do_plugin_actions( 'before-filters-fields', $attributes, $state, $taxonomies, $sort_by_options ); ?>
 			<input type="hidden" name="page" value="<?php echo esc_attr( $state['page'] ); ?>">
 			<?php if ( $attributes['showSortByFilter'] && $attributes['showSortByOutside'] ) : ?>
 				<input type="hidden" name="sort_by" value="<?php echo esc_attr( $state['sortBy'] ); ?>">
@@ -117,7 +124,9 @@ trait Filters {
 				</div>
 			<?php endif; ?>
 
+			<?php $this->do_plugin_actions( 'after-filters-fields', $attributes, $state, $taxonomies, $sort_by_options ); ?>
 			<?php if ( $attributes['showSearchButton'] || $attributes['showClearFiltersButton'] ) : ?>
+				<?php $this->do_plugin_actions( 'before-filter-actions', $attributes, $state, $taxonomies, $sort_by_options ); ?>
 				<div class="baytek-query-filter-actions">
 					<?php if ( $attributes['showSearchButton'] ) : ?>
 						<button type="submit" class="baytek-query-button baytek-query-button-search">
@@ -135,11 +144,16 @@ trait Filters {
 						</button>
 					<?php endif; ?>
 				</div>
+				<?php $this->do_plugin_actions( 'after-filter-actions', $attributes, $state, $taxonomies, $sort_by_options ); ?>
 			<?php endif; ?>
 		</form>
+		<?php $this->do_plugin_actions( 'after-filters-form', $attributes, $state, $taxonomies, $sort_by_options ); ?>
 		<?php
+		$this->do_plugin_actions( 'after-filters', $attributes, $state, $taxonomies, $sort_by_options );
 
-		return (string) ob_get_clean();
+		$html = (string) ob_get_clean();
+
+		return $this->apply_plugin_filters( 'render-filters-html', $html, $attributes, $state, $taxonomies, $sort_by_options );
 	}
 
 	/**
