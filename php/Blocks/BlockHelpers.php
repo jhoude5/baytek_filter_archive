@@ -54,7 +54,7 @@ trait BlockHelpers {
 			'eventPostType' => 'event',
 			'eventDateMetaKey' => 'eventDate',
 			'enableEventDateFilter' => false,
-			'postsPerPage' => 10,
+			'postsPerPage' => 12,
 			'showPagination' => true,
 			'showResultsCount' => false,
 			'resultsCountPosition' => 'above',
