@@ -17,6 +17,16 @@
 		}
 		const usesSearchButton = !! attributes.showSearchButton;
 		const clearButton = form.querySelector( '[data-baytek-query-clear]' );
+		const searchField = form.querySelector( '[name="keyword"]' );
+
+		function setSearchFieldLoading( loading ) {
+			if ( ! searchField ) {
+				return;
+			}
+
+			searchField.readOnly = loading;
+			searchField.setAttribute( 'aria-busy', loading ? 'true' : 'false' );
+		}
 
 		function readState() {
 			const data = {};
@@ -95,6 +105,7 @@
 
 			isLoading = true;
 			block.classList.add( 'is-loading' );
+			setSearchFieldLoading( true );
 			updateClearButtonVisibility();
 
 			if ( pushState ) {
@@ -121,6 +132,7 @@
 				.finally( function() {
 					isLoading = false;
 					block.classList.remove( 'is-loading' );
+					setSearchFieldLoading( false );
 				} );
 		}
 
@@ -169,7 +181,6 @@
 			render( true );
 		} );
 
-		const searchField = form.querySelector( '[name="keyword"]' );
 		if ( searchField && ! usesSearchButton ) {
 			let timeoutId;
 			searchField.addEventListener( 'input', function() {
@@ -181,7 +192,7 @@
 					}
 					updateClearButtonVisibility();
 					render( true );
-				}, 250 );
+				}, 1000 );
 			} );
 		}
 
