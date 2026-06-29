@@ -46,7 +46,7 @@ trait Filters {
 			<?php if ( $attributes['enableSearch'] ) : ?>
 				<div class="baytek-query-filter filter-taxonomy wp-block-column input-container" id="keyword">
 					<label for="keyword-search"><?php esc_html_e( 'Keyword', 'baytek-filter-archive' ); ?></label>
-					<div class="select-wrapper">
+					<div class="search-wrapper">
 						<input type="search" name="keyword" id="keyword-search" value="<?php echo esc_attr( $state['keyword'] ); ?>" placeholder="<?php esc_attr_e( 'Search', 'baytek-filter-archive' ); ?>">
 					</div>
 				</div>
