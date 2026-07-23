@@ -62,8 +62,15 @@
 
 .baytek-query-grid {
   display: grid;
-  gap: var(--wp--style--block-gap, 1.5rem);
+  row-gap: var(--baytek-query-gap-row, 1.5rem);
+  column-gap: var(--baytek-query-gap-column, 1.5rem);
   grid-template-columns: repeat(var(--baytek-query-columns, 3), minmax(0, 1fr));
+  @media(max-width: 767px) {
+    grid-template-columns: repeat(var(--baytek-query-columns-mobile, 1), minmax(0, 1fr));
+  }
+  @media(min-width: 768px) and (max-width: 1023px) {
+    grid-template-columns: repeat(var(--baytek-query-columns-tablet, 2), minmax(0, 1fr));
+  }
 }
 
 .baytek-query-block.baytek-query-columns-1 {
@@ -187,10 +194,6 @@
 
 @media (max-width: 782px) {
   .baytek-query-block.baytek-query-filters-position-sidebar .baytek-query-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .baytek-query-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -276,9 +276,16 @@ class Plugin {
 		$style      = '';
 		$block_gap  = $this->get_block_gap_value( $attributes );
 
-		if ( $block_gap ) {
-			$style = '--wp--style--block-gap:' . $block_gap . ';';
+		if ( $block_gap['row'] ) {
+			$style .= '--baytek-query-gap-row:' . $block_gap['row'] . ';';
 		}
+
+		if ( $block_gap['column'] ) {
+			$style .= '--baytek-query-gap-column:' . $block_gap['column'] . ';';
+		}
+
+		$style .= '--baytek-query-columns-tablet:' . (int) $attributes['columnsTablet'] . ';';
+		$style .= '--baytek-query-columns-mobile:' . (int) $attributes['columnsMobile'] . ';';
 
 		$wrapper = get_block_wrapper_attributes(
 			[

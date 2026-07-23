@@ -339,13 +339,34 @@
 							},
 						} ),
 						el( RangeControl, {
-							label: __( 'Columns', 'baytek-filter-archive' ),
+							label: __( 'Columns (Desktop)', 'baytek-filter-archive' ),
 							value: attributes.columns,
 							onChange: function( value ) {
 								setAttributes( { columns: value } );
 							},
 							min: 1,
 							max: 6,
+							help: __( 'Applies at desktop widths (1024px and above).', 'baytek-filter-archive' ),
+						} ),
+						el( RangeControl, {
+							label: __( 'Columns (Tablet)', 'baytek-filter-archive' ),
+							value: attributes.columnsTablet,
+							onChange: function( value ) {
+								setAttributes( { columnsTablet: value } );
+							},
+							min: 1,
+							max: 6,
+							help: __( 'Applies at tablet widths (768px–1023px).', 'baytek-filter-archive' ),
+						} ),
+						el( RangeControl, {
+							label: __( 'Columns (Mobile)', 'baytek-filter-archive' ),
+							value: attributes.columnsMobile,
+							onChange: function( value ) {
+								setAttributes( { columnsMobile: value } );
+							},
+							min: 1,
+							max: 6,
+							help: __( 'Applies at mobile widths (below 768px).', 'baytek-filter-archive' ),
 						} ),
 						el( SelectControl, {
 							label: __( 'Post Pattern', 'baytek-filter-archive' ),

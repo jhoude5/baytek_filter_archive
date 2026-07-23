@@ -32,27 +32,51 @@ trait BlockHelpers {
 	}
 
 	/**
-	 * Get the block gap CSS value from the editor
+	 * Get the block gap CSS values from the editor.
+	 *
+	 * The block declares axial blockGap support (separate row/column
+	 * controls), so the stored value is an object ( `top` = row/vertical,
+	 * `left` = column/horizontal ) rather than a single string.
 	 *
 	 * @param array $attributes Block attributes.
-	 * @return string
+	 * @return array{row: string, column: string}
 	 */
 	private function get_block_gap_value( $attributes ) {
 		$block_gap = $attributes['style']['spacing']['blockGap'] ?? '';
 
-		if ( ! is_string( $block_gap ) || '' === $block_gap ) {
+		if ( is_array( $block_gap ) ) {
+			return [
+				'row'    => $this->resolve_spacing_value( $block_gap['top'] ?? '' ),
+				'column' => $this->resolve_spacing_value( $block_gap['left'] ?? '' ),
+			];
+		}
+
+		$value = $this->resolve_spacing_value( $block_gap );
+
+		return [
+			'row'    => $value,
+			'column' => $value,
+		];
+	}
+
+	/**
+	 * Resolve a raw spacing value, converting preset references to CSS variables.
+	 *
+	 * @param mixed $value Raw spacing value.
+	 * @return string
+	 */
+	private function resolve_spacing_value( $value ) {
+		if ( ! is_string( $value ) || '' === $value ) {
 			return '';
 		}
 
-		if ( 0 === strpos( $block_gap, 'var:preset|spacing|' ) ) {
-			$preset_slug = substr( $block_gap, strlen( 'var:preset|spacing|' ) );
+		if ( 0 === strpos( $value, 'var:preset|spacing|' ) ) {
+			$preset_slug = substr( $value, strlen( 'var:preset|spacing|' ) );
 
-			if ( '' !== $preset_slug ) {
-				return 'var(--wp--preset--spacing--' . sanitize_key( $preset_slug ) . ')';
-			}
+			return '' !== $preset_slug ? 'var(--wp--preset--spacing--' . sanitize_key( $preset_slug ) . ')' : '';
 		}
 
-		return sanitize_text_field( $block_gap );
+		return sanitize_text_field( $value );
 	}
 
 	/**
@@ -88,6 +112,8 @@ trait BlockHelpers {
 			'orderByMetaKey' => '',
 			'order' => 'desc',
 			'columns' => 3,
+			'columnsTablet' => 2,
+			'columnsMobile' => 1,
 			'filtersPosition' => 'top',
 			'templateId' => 0,
 		];
@@ -115,6 +141,8 @@ trait BlockHelpers {
 		$attributes['resultsCountFormat']     = in_array( $attributes['resultsCountFormat'], [ 'range_total', 'page_total', 'custom' ], true ) ? $attributes['resultsCountFormat'] : 'range_total';
 		$attributes['resultsCountCustomText'] = sanitize_text_field( (string) $attributes['resultsCountCustomText'] );
 		$attributes['columns']                = max( 1, min( 6, (int) $attributes['columns'] ) );
+		$attributes['columnsTablet']          = max( 1, min( 6, (int) $attributes['columnsTablet'] ) );
+		$attributes['columnsMobile']          = max( 1, min( 6, (int) $attributes['columnsMobile'] ) );
 		$attributes['filtersPosition']        = in_array( $attributes['filtersPosition'], [ 'top', 'sidebar' ], true ) ? $attributes['filtersPosition'] : 'top';
 		$attributes['templateId']             = (int) $attributes['templateId'];
 		$attributes['orderBy']                = in_array( $attributes['orderBy'], [ 'date', 'title', 'modified', 'menu_order', 'rand', 'meta_value' ], true ) ? $attributes['orderBy'] : 'date';
